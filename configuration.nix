@@ -128,6 +128,7 @@
   vim # Do not forget to add an editor to edit configuration.nix! 
   wget
   git
+  gh
   curl
   kitty
   waybar
