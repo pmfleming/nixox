@@ -1,26 +1,24 @@
 # NixOS Config
 
-This repository tracks the NixOS configuration copied from `/etc/nixos`.
+This repository tracks the live NixOS flake configuration in `/etc/nixos`.
 
 ## Apply Changes
 
-From this repository:
+Apply the ThinkPad configuration:
 
 ```sh
-sudo nixos-rebuild switch -I nixos-config=$PWD/configuration.nix
+sudo nixos-rebuild switch --flake /etc/nixos#thinkpad
 ```
 
-## Sync From Live Config
+## Validate Changes
 
-If `/etc/nixos` is edited directly, copy the live files back before committing:
+Check the flake before applying it:
 
 ```sh
-cp /etc/nixos/configuration.nix .
-cp /etc/nixos/hardware-configuration.nix .
-git diff
+nix flake check /etc/nixos --no-build
 ```
 
 ## Notes
 
 - `hardware-configuration.nix` is machine-specific.
-- Review `git diff` before pushing this repository to a remote.
+- Review `git diff` before committing or applying changes.

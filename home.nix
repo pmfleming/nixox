@@ -82,6 +82,7 @@ in
     nixosUpdateCheck
     zenBrowser
     ghostty
+    waybar
     hyprlock
     hyprpaper
     mako
