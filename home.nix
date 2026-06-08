@@ -2,6 +2,7 @@
 
 let
   system = pkgs.stdenv.hostPlatform.system;
+  hyprlandGuiutils = inputs.hyprland-guiutils.packages.${system}.default;
   zenBrowser = inputs.zen-browser.packages.${system}.default;
 
   hyprMonitorAuto = pkgs.writeShellApplication {
@@ -81,20 +82,19 @@ in
     hyprMonitorAuto
     nixosUpdateCheck
     zenBrowser
+    codex
     ghostty
+    hyprlandGuiutils
     waybar
     hyprlock
     hyprpaper
-    mako
-    wofi
     btop
     htop
-    kanshi
   ];
 
   home.sessionVariables = {
     BROWSER = "zen";
-    EDITOR = "code --wait";
+    EDITOR = "nvim";
     VISUAL = "code --wait";
     GIT_EDITOR = "code --wait";
     GTK_THEME = "Adwaita:dark";
@@ -191,6 +191,27 @@ in
 
   services.gnome-keyring.enable = true;
   services.poweralertd.enable = false;
+
+  systemd.user.services.nixos-update-check = {
+    Unit = {
+      Description = "Check NixOS flake inputs for updates";
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${nixosUpdateCheck}/bin/nixos-update-check";
+    };
+  };
+
+  systemd.user.timers.nixos-update-check = {
+    Unit.Description = "Run NixOS update check";
+    Timer = {
+      OnBootSec = "5m";
+      OnUnitActiveSec = "6h";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
 
   programs.bash.enable = true;
 

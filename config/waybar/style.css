@@ -2,7 +2,7 @@
   border: none;
   border-radius: 0;
   font-family: "JetBrainsMono Nerd Font", monospace;
-  font-size: 11px;
+  font-size: 13px;
   min-height: 0;
 }
 
@@ -17,10 +17,10 @@ window#waybar {
 }
 
 #workspaces button {
-  min-width: 15px;
-  min-height: 15px;
+  min-width: 18px;
+  min-height: 18px;
   padding: 0;
-  margin: 6px 3px;
+  margin: 7px 3px;
   border-radius: 2px;
   color: transparent;
   background: #3fb950;
@@ -59,7 +59,7 @@ window#waybar {
 #backlight,
 #battery,
 #clock {
-  padding: 0 8px;
+  padding: 0 10px;
   margin: 0 1px;
 }
 

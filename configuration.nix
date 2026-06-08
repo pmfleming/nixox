@@ -5,10 +5,20 @@
     ./hardware-configuration.nix
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      auto-optimise-store = true;
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -35,14 +45,6 @@
   };
 
   console.keyMap = "us";
-
-  services.xserver = {
-    enable = false;
-    xkb = {
-      layout = "us,gb";
-      variant = "intl,";
-    };
-  };
 
   services.displayManager.gdm.enable = false;
   services.desktopManager.gnome.enable = false;
@@ -107,6 +109,7 @@
     enable32Bit = true;
   };
   hardware.enableRedistributableFirmware = true;
+  zramSwap.enable = true;
 
   services.power-profiles-daemon.enable = true;
   services.logind.settings.Login = {
@@ -127,8 +130,8 @@
     ];
     fontconfig.defaultFonts = {
       monospace = [ "JetBrainsMono Nerd Font" ];
-      sansSerif = [ "JetBrainsMono Nerd Font" ];
-      serif = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [ "Noto Sans" ];
+      serif = [ "Noto Serif" ];
     };
   };
 
@@ -147,13 +150,12 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     GTK_THEME = "Adwaita:dark";
-    EDITOR = "code --wait";
-    VISUAL = "code --wait";
     GIT_EDITOR = "code --wait";
   };
 
   programs.firefox.enable = false;
-  programs.command-not-found.enable = true;
+  programs.command-not-found.enable = false;
+  programs.nix-index.enable = true;
 
   environment.systemPackages = with pkgs; [
     (writeShellScriptBin "google-chrome-fullscreen" ''
@@ -163,7 +165,6 @@
     adwaita-icon-theme
     adwaita-qt
     bibata-cursors
-    blueman
     brightnessctl
     cliphist
     curl
@@ -190,13 +191,10 @@
     swappy
     thunar
     tree
-    tuigreet
     unzip
     vscode
     wget
     wl-clipboard
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
   ];
 
   system.stateVersion = "26.05";
