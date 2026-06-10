@@ -55,7 +55,9 @@
           ({ lib, ... }: {
             hardware.bluetooth.enable = lib.mkForce false;
             services.blueman.enable = lib.mkForce false;
+            services.openssh.enable = lib.mkForce true;
             services.power-profiles-daemon.enable = lib.mkForce false;
+            networking.firewall.allowedTCPPorts = [ 22 ];
 
             image.modules.hyperv = {
               boot.loader.systemd-boot.enable = lib.mkForce false;

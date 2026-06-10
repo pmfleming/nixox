@@ -217,7 +217,18 @@ in
 
   programs.git = {
     enable = true;
-    settings.core.editor = "code --wait";
+    userName = "Paul Fleming";
+    userEmail = "pmfleming@users.noreply.github.com";
+    settings = {
+      core.editor = "code --wait";
+      credential."https://github.com".helper = "!gh auth git-credential";
+      safe.directory = "/etc/nixos";
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+    settings.git_protocol = "https";
   };
 
   programs.home-manager.enable = true;
