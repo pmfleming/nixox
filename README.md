@@ -2,6 +2,15 @@
 
 This repository tracks the live NixOS flake configuration in `/etc/nixos`.
 
+## Layout
+
+- `configuration.nix` imports the shared NixOS modules.
+- `modules/nixos/` contains shared system configuration used by both hosts.
+- `hosts/` contains host-specific policy layered on top of the shared modules.
+- `hardware-configuration.nix` is ThinkPad-specific hardware configuration.
+- `hardware-hyperv.nix` is Hyper-V-specific hardware configuration.
+- `home.nix` contains the Home Manager user configuration.
+
 ## Apply Changes
 
 Apply the ThinkPad configuration:
